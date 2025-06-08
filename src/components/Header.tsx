@@ -13,13 +13,7 @@ const Header: React.FC = () => {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <motion.div
-            className="flex items-center space-x-3"
-            whileHover={{ scale: 1.05 }}
-          >
-            <div className="p-2 bg-white/10 rounded-lg">
-              <Zap className="w-6 h-6 text-yellow-400" />
-            </div>
+          <motion.div className="flex items-center space-x-3">
             <h1 className="text-xl md:text-2xl font-bold">
               Инструмент моделирования ПСЭ
             </h1>

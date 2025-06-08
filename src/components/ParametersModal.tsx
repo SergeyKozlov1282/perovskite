@@ -1,8 +1,12 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
-import { materialProperties, defectProperties } from '../data/materialProperties';
-import { solarCellData } from '../data/solarCellData';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
+import {
+  materialProperties,
+  defectProperties,
+} from "../data/materialProperties";
+import { solarCellData } from "../data/solarCellData";
+import { useEffect } from "react";
 
 interface ParametersModalProps {
   isOpen: boolean;
@@ -15,32 +19,53 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
   isOpen,
   onClose,
   perovskite,
-  htl
+  htl,
 }) => {
-  const currentConfigData = solarCellData[`${perovskite}_${htl}`];
-  
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const currentConfigData =
+    solarCellData[(perovskite + "_" + htl) as keyof typeof solarCellData];
+
   const parametersOrder = [
-    'Толщина (мкм)',
-    'Ширина запрещенной зоны, Eg (эВ)',
-    'Электронное сродство, χ (эВ)',
-    'Относительная диэлектрическая проницаемость, εr',
-    'Эффективная плотность состояний в зоне проводимости, Nc (см⁻³)',
-    'Эффективная плотность состояний в валентной зоне, Nv (см⁻³)',
-    'Подвижность электронов, μn (см²∙В⁻¹∙с⁻¹)',
-    'Подвижность дырок, μp (см²∙В⁻¹∙с⁻¹)',
-    'Концентрация акцепторов, NA (см⁻³)',
-    'Концентрация доноров, ND (см⁻³)'
+    "Толщина (мкм)",
+    "Ширина запрещенной зоны, Eg (эВ)",
+    "Электронное сродство, χ (эВ)",
+    "Относительная диэлектрическая проницаемость, εr",
+    "Эффективная плотность состояний в зоне проводимости, Nc (см⁻³)",
+    "Эффективная плотность состояний в валентной зоне, Nv (см⁻³)",
+    "Подвижность электронов, μn (см²·В⁻¹·с⁻¹)",
+    "Подвижность дырок, μp (см²·В⁻¹·с⁻¹)",
+    "Концентрация акцепторов, NA (см⁻³)",
+    "Концентрация доноров, ND (см⁻³)",
+    "Концентрация дефектов, nt (см⁻³)",
   ];
 
   const getParameterValue = (material: string, paramName: string) => {
-    if (paramName === 'Толщина (мкм)' && currentConfigData) {
-      const thicknessKey = material === 'TiO2' ? 'TiO2' : 
-                          material === 'MAPbI3' ? 'MAPbI3' :
-                          material === 'CsPbI3' ? 'CsPbI3' :
-                          htl === 'Spiro' ? 'Spiro' : 'PEDOT';
+    if (paramName === "Толщина (мкм)" && currentConfigData) {
+      const thicknessKey =
+        material === "TiO2"
+          ? "TiO2"
+          : material === "MAPbI3"
+          ? "MAPbI3"
+          : material === "CsPbI3"
+          ? "CsPbI3"
+          : htl === "Spiro"
+          ? "Spiro"
+          : "PEDOT";
       return currentConfigData.chosenThickness[thicknessKey];
     }
-    return materialProperties[material]?.[paramName];
+    return materialProperties[material as keyof typeof materialProperties]?.[
+      paramName
+    ];
   };
 
   return (
@@ -80,7 +105,7 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
                 <h4 className="text-xl font-semibold mb-4 text-gray-700">
                   Физические параметры слоёв
                 </h4>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-hidden">
                   <table className="w-full border-collapse border border-gray-300 text-sm">
                     <thead>
                       <tr className="bg-gray-50">
@@ -88,13 +113,13 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
                           Параметр
                         </th>
                         <th className="border border-gray-300 p-3 text-left font-semibold">
-                          ЭТС (TiO₂)
+                          TiO₂
                         </th>
                         <th className="border border-gray-300 p-3 text-left font-semibold">
-                          Перовскит
+                          {perovskite}
                         </th>
                         <th className="border border-gray-300 p-3 text-left font-semibold">
-                          ДТС
+                          {htl === "Spiro" ? "Spiro-OMeTAD" : "PEDOT:PSS"}
                         </th>
                       </tr>
                     </thead>
@@ -111,82 +136,21 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
                             {paramName}
                           </td>
                           <td className="border border-gray-300 p-3">
-                            {getParameterValue('TiO2', paramName)}
+                            {getParameterValue("TiO2", paramName)}
                           </td>
                           <td className="border border-gray-300 p-3">
-                            {getParameterValue(perovskite, paramName)}
+                            {getParameterValue(
+                              perovskite as keyof typeof materialProperties,
+                              paramName
+                            )}
                           </td>
                           <td className="border border-gray-300 p-3">
-                            {getParameterValue(htl === 'Spiro' ? 'Spiro' : 'PEDOT', paramName)}
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Defects table */}
-              <div>
-                <h4 className="text-xl font-semibold mb-4 text-gray-700">
-                  Параметры дефектов (поглощающий слой и интерфейсы)
-                </h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300 text-sm">
-                    <thead>
-                      <tr className="bg-gray-50">
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          Дефект
-                        </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          Локализация
-                        </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          Плотность (см⁻³)
-                        </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          σₙ (см²)
-                        </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          σₚ (см²)
-                        </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          Тип
-                        </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
-                          Eₜ
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {defectProperties.map((defect, index) => (
-                        <motion.tr
-                          key={defect.name}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 + index * 0.05 }}
-                          className="hover:bg-gray-50"
-                        >
-                          <td className="border border-gray-300 p-3 font-medium">
-                            {defect.name}
-                          </td>
-                          <td className="border border-gray-300 p-3">
-                            {defect.location}
-                          </td>
-                          <td className="border border-gray-300 p-3">
-                            {defect.density}
-                          </td>
-                          <td className="border border-gray-300 p-3">
-                            {defect.sigma_n}
-                          </td>
-                          <td className="border border-gray-300 p-3">
-                            {defect.sigma_p}
-                          </td>
-                          <td className="border border-gray-300 p-3">
-                            {defect.type}
-                          </td>
-                          <td className="border border-gray-300 p-3">
-                            {defect.et}
+                            {getParameterValue(
+                              (htl === "Spiro"
+                                ? "Spiro"
+                                : "PEDOT") as keyof typeof materialProperties,
+                              paramName
+                            )}
                           </td>
                         </motion.tr>
                       ))}

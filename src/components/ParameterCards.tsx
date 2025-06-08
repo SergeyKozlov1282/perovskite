@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Zap, Battery, Gauge, TrendingUp } from 'lucide-react';
-import { SolarCellParams } from '../data/solarCellData';
+import React from "react";
+import { motion } from "framer-motion";
+import { Zap, Battery, Gauge, TrendingUp } from "lucide-react";
+import { SolarCellParams } from "../data/solarCellData";
 
 interface ParameterCardsProps {
   params: SolarCellParams;
@@ -10,38 +10,33 @@ interface ParameterCardsProps {
 const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
   const cards = [
     {
-      label: 'Voc (В)',
+      label: "Voc (В)",
       value: params.voc,
       icon: Battery,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200'
+      color: "text-blue-600",
+      hover: "hover:border-blue-600 hover:shadow-blue-100",
     },
     {
-      label: 'Jsc (мА/см²)',
+      label: "Jsc (мА/см²)",
       value: params.jsc,
       icon: Zap,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-200'
+      color: "text-purple-600",
+      hover: "hover:border-purple-600 hover:shadow-purple-100",
     },
     {
-      label: 'FF (%)',
+      label: "FF (%)",
       value: params.ff,
       icon: Gauge,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200'
+      color: "text-green-600",
+      hover: "hover:border-green-600 hover:shadow-green-100",
     },
     {
-      label: 'КПД (%)',
+      label: "КПД (%)",
       value: params.eta,
       icon: TrendingUp,
-      color: 'text-accent-600',
-      bgColor: 'bg-accent-50',
-      borderColor: 'border-accent-200',
-      highlight: true
-    }
+      color: "text-yellow-600",
+      hover: "hover:border-yellow-500 hover:shadow-yellow-100",
+    },
   ];
 
   return (
@@ -51,25 +46,17 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
           key={card.label}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
-          className={`p-6 rounded-xl border-2 ${card.bgColor} ${card.borderColor} ${
-            card.highlight ? 'ring-2 ring-accent-200' : ''
-          } card-hover`}
+          transition={{ duration: 0.3 }}
+          whileHover={{ y: -8, boxShadow: "0 8px 32px 0 rgba(30,41,59,0.10)" }}
+          className={`p-6 rounded-lg border border-gray-300 bg-white transition-shadow transition-transform duration-150 ease-out cursor-pointer ${card.hover}`}
         >
           <div className="flex items-center justify-between mb-3">
             <card.icon className={`w-5 h-5 ${card.color}`} />
-            {card.highlight && (
-              <div className="w-2 h-2 bg-accent-500 rounded-full animate-pulse" />
-            )}
           </div>
-          <p className="text-sm text-gray-600 mb-1">{card.label}</p>
-          <motion.p 
-            className={`text-2xl font-bold ${card.color}`}
-            key={card.value}
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
+          <p className="text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">
+            {card.label}
+          </p>
+          <motion.p className={`text-2xl font-bold text-gray-900`}>
             {card.value}
           </motion.p>
         </motion.div>

@@ -1,47 +1,46 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Zap, Battery, Gauge, TrendingUp } from "lucide-react";
-import { SolarCellParams } from "../data/solarCellData";
 
 interface ParameterCardsProps {
-  params: SolarCellParams;
+  params: {
+    voc: number;
+    jsc: number;
+    ff: number;
+    pce: number;
+  };
 }
 
 const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
   const cards = [
     {
-      label: "Voc (В)",
-      value: params.voc,
-      icon: Battery,
-      color: "text-blue-600",
-      hover: "hover:border-blue-600 hover:shadow-blue-100",
+      label: "Voc",
+      value: `${params.voc.toFixed(2)} V`,
+      color: "text-blue-500",
+      hover: "hover:bg-blue-50",
     },
     {
-      label: "Jsc (мА/см²)",
-      value: params.jsc,
-      icon: Zap,
-      color: "text-purple-600",
-      hover: "hover:border-purple-600 hover:shadow-purple-100",
+      label: "Jsc",
+      value: `${params.jsc.toFixed(2)} mA/cm²`,
+      color: "text-green-500",
+      hover: "hover:bg-green-50",
     },
     {
-      label: "FF (%)",
-      value: params.ff,
-      icon: Gauge,
-      color: "text-green-600",
-      hover: "hover:border-green-600 hover:shadow-green-100",
+      label: "FF",
+      value: `${(params.ff * 100).toFixed(1)}%`,
+      color: "text-purple-500",
+      hover: "hover:bg-purple-50",
     },
     {
-      label: "КПД (%)",
-      value: params.pce,
-      icon: TrendingUp,
-      color: "text-yellow-600",
-      hover: "hover:border-yellow-500 hover:shadow-yellow-100",
+      label: "PCE",
+      value: `${(params.pce * 100).toFixed(2)}%`,
+      color: "text-orange-500",
+      hover: "hover:bg-orange-50",
     },
   ];
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      {cards.map((card, index) => (
+      {cards.map((card) => (
         <motion.div
           key={card.label}
           initial={{ opacity: 0, y: 20 }}
@@ -51,7 +50,7 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
           className={`p-6 rounded-lg border border-gray-300 bg-white transition-shadow transition-transform duration-150 ease-out cursor-pointer ${card.hover}`}
         >
           <div className="flex items-center justify-between mb-3">
-            <card.icon className={`w-5 h-5 ${card.color}`} />
+            <div className={`w-5 h-5 ${card.color}`} />
           </div>
           <p className="text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">
             {card.label}

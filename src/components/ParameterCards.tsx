@@ -29,14 +29,14 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
     },
     {
       label: "FF (%)",
-      value: `${(params.ff * 100).toFixed(1)}%`,
+      value: `${params.ff.toFixed(1)}%`,
       icon: Gauge,
       color: "text-green-600",
       hover: "hover:border-green-600 hover:shadow-green-100",
     },
     {
       label: "КПД (%)",
-      value: `${(params.pce * 100).toFixed(2)}%`,
+      value: `${params.pce.toFixed(2)}%`,
       icon: TrendingUp,
       color: "text-yellow-600",
       hover: "hover:border-yellow-500 hover:shadow-yellow-100",

@@ -4,7 +4,6 @@ import { Settings, ChevronDown, ChevronUp } from "lucide-react";
 import Header from "./components/Header";
 import LayerStructure from "./components/LayerStructure";
 import ParameterCards from "./components/ParameterCards";
-import ComparisonPanel from "./components/ComparisonPanel";
 import ParametersModal from "./components/ParametersModal";
 import Results from "./components/Results";
 import { solarCellData, ConfigurationKey } from "./data/solarCellData";

@@ -348,7 +348,7 @@ export const Results: React.FC<ResultsProps> = ({
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
+        transition={{ delay: 0.2 }}
         className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
       >
         <div className="flex items-center justify-between mb-4">
@@ -383,25 +383,25 @@ export const Results: React.FC<ResultsProps> = ({
             </motion.button>
           )}
         </div>
-        <Line options={jvOptions} data={jvData} />
+        <Line data={jvData} options={jvOptions} />
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ delay: 0.3 }}
         className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
       >
-        <Line options={eqeOptions} data={eqeData} />
+        <Line data={eqeData} options={eqeOptions} />
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 0.4 }}
         className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
       >
-        <Line options={pceOptions} data={pceData} />
+        <Line data={pceData} options={pceOptions} />
       </motion.div>
     </div>
   );

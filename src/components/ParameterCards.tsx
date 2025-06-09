@@ -32,7 +32,7 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
     },
     {
       label: "КПД (%)",
-      value: params.eta,
+      value: params.pce,
       icon: TrendingUp,
       color: "text-yellow-600",
       hover: "hover:border-yellow-500 hover:shadow-yellow-100",

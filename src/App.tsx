@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Settings } from "lucide-react";
+import { Settings, ChevronDown, ChevronUp } from "lucide-react";
 import Header from "./components/Header";
 import LayerStructure from "./components/LayerStructure";
 import ParameterCards from "./components/ParameterCards";
-import ChartComponent from "./components/ChartComponent";
 import ComparisonPanel from "./components/ComparisonPanel";
 import ParametersModal from "./components/ParametersModal";
-import { solarCellData } from "./data/solarCellData";
+import Results from "./components/Results";
+import { solarCellData, ConfigurationKey } from "./data/solarCellData";
 
 const chartColors = [
   "#05336e", // ЛЭТИ Blue
@@ -25,8 +25,9 @@ function App() {
     string[]
   >([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
-  const currentKey = `${perovskite}_${htl}`;
+  const currentKey = `${perovskite}_${htl}` as ConfigurationKey;
   const currentData = solarCellData[currentKey];
 
   const handleMaterialChange = (
@@ -50,67 +51,6 @@ function App() {
 
   const handleClearAll = () => {
     setSelectedConfigurations([]);
-  };
-
-  const createChartData = (type: "jv" | "qe" | "pce") => {
-    const datasets = [];
-    let colorIndex = 0;
-
-    // Primary dataset
-    const primaryData = currentData[type];
-    datasets.push({
-      label: `Основная (${perovskite}/${htl})`,
-      data:
-        type === "jv"
-          ? primaryData.j
-          : type === "qe"
-          ? primaryData.qe
-          : primaryData.eta,
-      borderColor: chartColors[colorIndex],
-      backgroundColor: chartColors[colorIndex].replace(")", ", 0.1)"),
-      fill: false,
-      borderWidth: 2,
-      tension: 0.1,
-    });
-    colorIndex++;
-
-    // Comparison datasets
-    selectedConfigurations.forEach((config) => {
-      if (config !== currentKey) {
-        const compData = solarCellData[config];
-        if (compData) {
-          const [compPerovskite, compHtl] = config.split("_");
-          datasets.push({
-            label: `Сравнение (${compPerovskite}/${compHtl})`,
-            data:
-              type === "jv"
-                ? compData[type].j
-                : type === "qe"
-                ? compData[type].qe
-                : compData[type].eta,
-            borderColor: chartColors[colorIndex % chartColors.length],
-            backgroundColor: chartColors[
-              colorIndex % chartColors.length
-            ].replace(")", ", 0.1)"),
-            fill: false,
-            borderDash: [5, 5],
-            borderWidth: 2,
-            tension: 0.1,
-          });
-          colorIndex++;
-        }
-      }
-    });
-
-    return {
-      labels:
-        type === "jv"
-          ? primaryData.v.map((v) => v.toFixed(2))
-          : type === "qe"
-          ? primaryData.lambda
-          : primaryData.thickness,
-      datasets,
-    };
   };
 
   return (
@@ -163,8 +103,7 @@ function App() {
             >
               <motion.button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 focus:bg-gray-900 active:bg-black focus:outline-none transition-colors font-medium shadow-lg"
-                whileHover={{ scale: 1.05, y: -2 }}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 focus:bg-gray-900 active:bg-black focus:outline-none transition-all duration-500 ease-in-out font-medium shadow-lg hover:shadow-2xl hover:shadow-gray-800/50"
                 whileTap={{ scale: 0.95 }}
               >
                 <Settings className="w-5 h-5" />
@@ -174,49 +113,49 @@ function App() {
 
             <ParameterCards params={currentData.params} />
 
-            <div className="grid lg:grid-cols-2 gap-8 mb-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
+            <div className="flex justify-center mb-6">
+              <motion.button
+                onClick={() => setShowResults(!showResults)}
+                className="flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 focus:bg-gray-900 active:bg-black focus:outline-none transition-all duration-500 ease-in-out font-medium shadow-lg hover:shadow-2xl hover:shadow-gray-800/50"
+                whileTap={{ scale: 0.95 }}
               >
-                <ChartComponent
-                  title="Вольт-амперная характеристика"
-                  data={createChartData("jv")}
-                  height={350}
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <ChartComponent
-                  title="Квантовая эффективность"
-                  data={createChartData("qe")}
-                  height={350}
-                />
-              </motion.div>
+                <span>
+                  {showResults ? "Скрыть графики" : "Показать графики"}
+                </span>
+                {showResults ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </motion.button>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <ChartComponent
-                title="Влияние толщины на КПД"
-                data={createChartData("pce")}
-                height={400}
+            {showResults && (
+              <Results
+                results={{
+                  jv: {
+                    voltage: currentData.jv.v,
+                    current: currentData.jv.j,
+                  },
+                  eqe: {
+                    wavelength: currentData.qe.lambda,
+                    efficiency: currentData.qe.qe,
+                  },
+                  pce: {
+                    thickness: currentData.pce.thickness,
+                    eta: currentData.pce.eta,
+                  },
+                  characteristics: {
+                    voc: currentData.params.voc,
+                    jsc: currentData.params.jsc,
+                    ff: currentData.params.ff,
+                    pce: currentData.params.pce,
+                  },
+                }}
+                selectedConfigurations={selectedConfigurations}
+                currentKey={currentKey}
               />
-            </motion.div>
-
-            <ComparisonPanel
-              selectedConfigurations={selectedConfigurations}
-              onConfigurationToggle={handleConfigurationToggle}
-              onClearAll={handleClearAll}
-            />
+            )}
           </div>
         </motion.section>
       </main>
@@ -227,9 +166,7 @@ function App() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <p className="text-sm">
-          © 2025 С.В. Козлов, СПбГЭТУ «ЛЭТИ». Все права защищены.
-        </p>
+        <p className="text-sm">© 2024 СПбГЭТУ "ЛЭТИ". Все права защищены.</p>
       </motion.footer>
 
       <ParametersModal

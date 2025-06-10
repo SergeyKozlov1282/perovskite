@@ -616,9 +616,9 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[340px] overflow-x-auto sm:overflow-visible"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[700px] overflow-x-auto sm:overflow-visible"
       >
-        <div className="w-full">
+        <div className="w-full h-full">
           <Line options={mobileJvOptions} data={jvData} />
         </div>
       </motion.div>
@@ -627,9 +627,9 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[340px] overflow-x-auto sm:overflow-visible"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[700px] overflow-x-auto sm:overflow-visible"
       >
-        <div className="w-full">
+        <div className="w-full h-full">
           <Line options={mobileEqeOptions} data={eqeData} />
         </div>
       </motion.div>
@@ -638,9 +638,9 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[340px] overflow-x-auto sm:overflow-visible"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[700px] overflow-x-auto sm:overflow-visible"
       >
-        <div className="w-full">
+        <div className="w-full h-full">
           <Line options={mobilePceOptions} data={pceData} />
         </div>
       </motion.div>

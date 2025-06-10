@@ -51,10 +51,9 @@ interface ResultsProps {
 }
 
 const chartColors = [
-  "rgb(75, 192, 192)", // Основной цвет
-  "rgb(255, 99, 132)", // Красный
-  "rgb(54, 162, 235)", // Синий
-  "rgb(255, 206, 86)", // Желтый
+  "#007EA7", // Blue
+  "#BC2C1A", // Red
+  "#5FAD56", // Green
 ];
 
 export const Results: React.FC<ResultsProps> = ({
@@ -68,14 +67,23 @@ export const Results: React.FC<ResultsProps> = ({
 
   const getColorForConfig = (config: string) => {
     if (config === currentKey) {
-      return "#2563eb"; // Цвет для текущей конфигурации
+      return "#1F2937"; // Цвет как у кнопки 'Параметры слоёв'
     }
     const index = selectedConfigurations.indexOf(config);
     return chartColors[index % chartColors.length];
   };
 
   const jvData = {
-    labels: results.jv.voltage.map((v) => v.toFixed(2)),
+    labels: [
+      ...new Set([
+        ...results.jv.voltage,
+        ...selectedConfigurations.flatMap(
+          (config) => solarCellData[config as ConfigurationKey].jv.v
+        ),
+      ]),
+    ]
+      .sort((a, b) => a - b)
+      .map((v) => v.toFixed(2)),
     datasets: [
       {
         label: "Текущая конфигурация",
@@ -101,6 +109,14 @@ export const Results: React.FC<ResultsProps> = ({
         })),
     ],
   };
+
+  // Находим максимальное значение напряжения среди всех конфигураций
+  const maxVoltage = Math.max(
+    ...results.jv.voltage,
+    ...selectedConfigurations.map((config) =>
+      Math.max(...solarCellData[config as ConfigurationKey].jv.v)
+    )
+  );
 
   const eqeData = {
     labels: results.eqe.wavelength.map((w) => w.toFixed(0)),
@@ -184,25 +200,54 @@ export const Results: React.FC<ResultsProps> = ({
         padding: { top: 10, bottom: 20 },
       },
       tooltip: {
-        backgroundColor: "#fff",
-        titleColor: "#222",
-        bodyColor: "#222",
-        borderColor: "#2563eb",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        titleColor: "#1a202c",
+        bodyColor: "#4a5568",
+        borderColor: "#e2e8f0",
         borderWidth: 1,
         padding: 12,
         cornerRadius: 8,
-        displayColors: false,
+        displayColors: true,
+        mode: "index" as const,
+        intersect: false,
+        boxWidth: 8,
+        boxHeight: 8,
+        boxPadding: 4,
+        usePointStyle: true,
+        titleFont: {
+          size: 13,
+          weight: "bold" as const,
+        },
+        bodyFont: {
+          size: 12,
+        },
+        callbacks: {
+          label: function (context: any) {
+            let label = context.dataset.label || "";
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(2);
+            }
+            return label;
+          },
+        },
       },
       animation: {
         duration: 1200,
         easing: "easeInOutQuart",
       },
     },
+    interaction: {
+      mode: "index" as const,
+      intersect: false,
+    },
     scales: {
       x: {
         title: {
           display: true,
-          text: "Напряжение (V)",
+          text: "Напряжение (Vхх)",
           font: { size: 14 },
         },
         grid: baseGrid,
@@ -210,7 +255,7 @@ export const Results: React.FC<ResultsProps> = ({
       y: {
         title: {
           display: true,
-          text: "Плотность тока (mA/cm²)",
+          text: "Плотность тока (Jкз, мА/см²)",
           font: { size: 14 },
         },
         grid: baseGrid,
@@ -232,20 +277,45 @@ export const Results: React.FC<ResultsProps> = ({
       },
       title: {
         display: true,
-        text: "Внешний квантовый выход",
+        text: "Внешняя квантовая эффективность",
         font: { size: 18, weight: "bold" as const },
         color: "#222",
         padding: { top: 10, bottom: 20 },
       },
       tooltip: {
-        backgroundColor: "#fff",
-        titleColor: "#222",
-        bodyColor: "#222",
-        borderColor: "#059669",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        titleColor: "#1a202c",
+        bodyColor: "#4a5568",
+        borderColor: "#e2e8f0",
         borderWidth: 1,
         padding: 12,
         cornerRadius: 8,
-        displayColors: false,
+        displayColors: true,
+        mode: "index" as const,
+        intersect: false,
+        boxWidth: 8,
+        boxHeight: 8,
+        boxPadding: 4,
+        usePointStyle: true,
+        titleFont: {
+          size: 13,
+          weight: "bold" as const,
+        },
+        bodyFont: {
+          size: 12,
+        },
+        callbacks: {
+          label: function (context: any) {
+            let label = context.dataset.label || "";
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(2);
+            }
+            return label;
+          },
+        },
       },
       animation: {
         duration: 1200,
@@ -264,13 +334,25 @@ export const Results: React.FC<ResultsProps> = ({
       y: {
         title: {
           display: true,
-          text: "Эффективность (%)",
+          text: "КЭ (%)",
           font: { size: 14 },
         },
         min: 0,
-        max: 100,
+        max: 105,
         grid: baseGrid,
+        beginAtZero: true,
+        ticks: {
+          padding: 10,
+          callback: function (tickValue: number | string) {
+            const value = Number(tickValue);
+            return value <= 100 ? value : "";
+          },
+        },
       },
+    },
+    interaction: {
+      mode: "index" as const,
+      intersect: false,
     },
   };
 
@@ -294,14 +376,39 @@ export const Results: React.FC<ResultsProps> = ({
         padding: { top: 10, bottom: 20 },
       },
       tooltip: {
-        backgroundColor: "#fff",
-        titleColor: "#222",
-        bodyColor: "#222",
-        borderColor: "#f59e42",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        titleColor: "#1a202c",
+        bodyColor: "#4a5568",
+        borderColor: "#e2e8f0",
         borderWidth: 1,
         padding: 12,
         cornerRadius: 8,
-        displayColors: false,
+        displayColors: true,
+        mode: "index" as const,
+        intersect: false,
+        boxWidth: 8,
+        boxHeight: 8,
+        boxPadding: 4,
+        usePointStyle: true,
+        titleFont: {
+          size: 13,
+          weight: "bold" as const,
+        },
+        bodyFont: {
+          size: 12,
+        },
+        callbacks: {
+          label: function (context: any) {
+            let label = context.dataset.label || "";
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y.toFixed(2);
+            }
+            return label;
+          },
+        },
       },
       animation: {
         duration: 1200,
@@ -320,11 +427,15 @@ export const Results: React.FC<ResultsProps> = ({
       y: {
         title: {
           display: true,
-          text: "Эффективность (%)",
+          text: "КПД (%)",
           font: { size: 14 },
         },
         grid: baseGrid,
       },
+    },
+    interaction: {
+      mode: "index" as const,
+      intersect: false,
     },
   };
 
@@ -345,33 +456,49 @@ export const Results: React.FC<ResultsProps> = ({
 
   return (
     <div className="space-y-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
-      >
-        <div className="flex items-center justify-between mb-4">
+      <div className="sticky top-[76px] z-30 bg-white/60 backdrop-blur border-b border-gray-200 mb-2 rounded-b-xl shadow-sm">
+        <div className="flex items-center justify-between px-4 pt-2 pb-2">
           <div className="flex flex-wrap gap-2">
-            {[
-              { key: "MAPbI3_Spiro", label: "MAPbI₃ / Spiro" },
-              { key: "CsPbI3_Spiro", label: "CsPbI₃ / Spiro" },
-              { key: "MAPbI3_PEDOT", label: "MAPbI₃ / PEDOT" },
-              { key: "CsPbI3_PEDOT", label: "CsPbI₃ / PEDOT" },
-            ].map((config) => (
-              <motion.button
-                key={config.key}
-                onClick={() => handleConfigSelect(config.key)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                  selectedConfigurations.includes(config.key)
-                    ? "bg-gray-800 text-white shadow-md"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-                whileTap={{ scale: 0.95 }}
-              >
-                {config.label}
-              </motion.button>
-            ))}
+            {(() => {
+              const configs = [
+                { key: "MAPbI3_Spiro", label: "MAPbI₃ / Spiro" },
+                { key: "CsPbI3_Spiro", label: "CsPbI₃ / Spiro" },
+                { key: "MAPbI3_PEDOT", label: "MAPbI₃ / PEDOT" },
+                { key: "CsPbI3_PEDOT", label: "CsPbI₃ / PEDOT" },
+              ];
+              // Сортируем: текущая конфигурация первой
+              const sorted = [
+                ...configs.filter((c) => c.key === currentKey),
+                ...configs.filter((c) => c.key !== currentKey),
+              ];
+              return sorted.map((config) => (
+                <motion.button
+                  key={config.key}
+                  onClick={
+                    config.key === currentKey
+                      ? undefined
+                      : () => handleConfigSelect(config.key)
+                  }
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200
+                    ${
+                      config.key === currentKey
+                        ? "bg-gray-800 text-white border-2 border-gray-800 font-bold shadow-lg cursor-default"
+                        : selectedConfigurations.includes(config.key)
+                        ? "bg-gray-800 text-white shadow-md"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    }
+                    ${config.key === currentKey ? "ring-2 ring-gray-800" : ""}
+                  `}
+                  style={config.key === currentKey ? { order: -1 } : {}}
+                  whileTap={
+                    config.key === currentKey ? undefined : { scale: 0.95 }
+                  }
+                  disabled={config.key === currentKey}
+                >
+                  {config.label}
+                </motion.button>
+              ));
+            })()}
           </div>
           {selectedConfigurations.length > 0 && (
             <motion.button
@@ -383,6 +510,13 @@ export const Results: React.FC<ResultsProps> = ({
             </motion.button>
           )}
         </div>
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
+      >
         <Line options={jvOptions} data={jvData} />
       </motion.div>
 

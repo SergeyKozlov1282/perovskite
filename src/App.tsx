@@ -54,7 +54,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col justify-between">
       <Header />
 
       <main className="container mx-auto px-6 py-8">
@@ -161,12 +161,14 @@ function App() {
       </main>
 
       <motion.footer
-        className="bg-primary-500 text-white text-center p-6 mt-12"
+        className="bg-gray-900/90 text-white text-center p-6 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <p className="text-sm">© 2024 СПбГЭТУ "ЛЭТИ". Все права защищены.</p>
+        <p className="text-sm">
+          © 2025 СПбГЭТУ "ЛЭТИ", Козлов Сергей. Все права защищены.
+        </p>
       </motion.footer>
 
       <ParametersModal

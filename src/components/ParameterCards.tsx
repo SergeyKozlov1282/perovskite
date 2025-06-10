@@ -10,14 +10,14 @@ interface ParameterCardsProps {
 const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
   const cards = [
     {
-      label: "Voc (В)",
+      label: "Vхх (В)",
       value: params.voc,
       icon: Battery,
       color: "text-blue-600",
       hover: "hover:border-blue-600 hover:shadow-blue-100",
     },
     {
-      label: "Jsc (мА/см²)",
+      label: "Jкз (мА/см²)",
       value: params.jsc,
       icon: Zap,
       color: "text-purple-600",
@@ -53,8 +53,13 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
           <div className="flex items-center justify-between mb-3">
             <card.icon className={`w-5 h-5 ${card.color}`} />
           </div>
-          <p className="text-xs text-gray-500 mb-1 font-medium uppercase tracking-wide">
-            {card.label}
+          <p className="text-xs text-gray-500 mb-1 font-medium tracking-wide">
+            {card.label.split('').map((char, i) => {
+              if (char === 'х' || char === 'к' || char === 'з') {
+                return <span key={i} className="text-[0.85em] align-sub">{char}</span>;
+              }
+              return char;
+            })}
           </p>
           <motion.p className={`text-2xl font-bold text-gray-900`}>
             {card.value}

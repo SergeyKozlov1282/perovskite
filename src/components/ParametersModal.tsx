@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { solarCellData } from "../data/solarCellData";
+import {
+  materialProperties,
+  defectProperties,
+} from "../data/materialProperties";
 
 interface ParametersModalProps {
   isOpen: boolean;
@@ -16,57 +20,51 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
   perovskite,
   htl,
 }) => {
-  const [activeTab, setActiveTab] = useState<"perovskite" | "htl">(
-    "perovskite"
-  );
-  const [parameters, setParameters] = useState({
-    perovskite: {
-      thickness: 500,
-      bandgap: 1.55,
-      mobility: 2.0,
-      doping: 1e16,
-    },
-    htl: {
-      thickness: 200,
-      bandgap: 2.8,
-      mobility: 1e-4,
-      doping: 1e19,
-    },
-  });
-
   useEffect(() => {
-    const currentKey = `${perovskite}_${htl}` as keyof typeof solarCellData;
-    const currentData = solarCellData[currentKey];
-    if (currentData) {
-      setParameters({
-        perovskite: {
-          thickness: currentData.params.thickness || 500,
-          bandgap: currentData.params.bandgap || 1.55,
-          mobility: currentData.params.mobility || 2.0,
-          doping: currentData.params.doping || 1e16,
-        },
-        htl: {
-          thickness: currentData.params.htlThickness || 200,
-          bandgap: currentData.params.htlBandgap || 2.8,
-          mobility: currentData.params.htlMobility || 1e-4,
-          doping: currentData.params.htlDoping || 1e19,
-        },
-      });
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-  }, [perovskite, htl]);
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
-  const handleParameterChange = (
-    layer: "perovskite" | "htl",
-    param: string,
-    value: number
-  ) => {
-    setParameters((prev) => ({
-      ...prev,
-      [layer]: {
-        ...prev[layer],
-        [param]: value,
-      },
-    }));
+  const currentConfigData =
+    solarCellData[(perovskite + "_" + htl) as keyof typeof solarCellData];
+
+  const parametersOrder = [
+    "Толщина (мкм)",
+    "Ширина запрещенной зоны, Eg (эВ)",
+    "Электронное сродство, χ (эВ)",
+    "Относительная диэлектрическая проницаемость, εr",
+    "Эффективная плотность состояний в зоне проводимости, Nc (см⁻³)",
+    "Эффективная плотность состояний в валентной зоне, Nv (см⁻³)",
+    "Подвижность электронов, μn (см²·В⁻¹·с⁻¹)",
+    "Подвижность дырок, μp (см²·В⁻¹·с⁻¹)",
+    "Концентрация акцепторов, NA (см⁻³)",
+    "Концентрация доноров, ND (см⁻³)",
+    "Концентрация дефектов, nt (см⁻³)",
+  ];
+
+  const getParameterValue = (material: string, paramName: string) => {
+    if (paramName === "Толщина (мкм)" && currentConfigData) {
+      const thicknessKey =
+        material === "TiO2"
+          ? "TiO2"
+          : material === "MAPbI3"
+          ? "MAPbI3"
+          : material === "CsPbI3"
+          ? "CsPbI3"
+          : htl === "Spiro"
+          ? "Spiro"
+          : "PEDOT";
+      return currentConfigData.chosenThickness[thicknessKey];
+    }
+    return materialProperties[material as keyof typeof materialProperties]?.[
+      paramName
+    ];
   };
 
   return (
@@ -99,49 +97,62 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
             </div>
 
             <div className="p-6">
-              <div className="flex space-x-4 mb-6">
-                <button
-                  onClick={() => setActiveTab("perovskite")}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeTab === "perovskite"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  Перовскит
-                </button>
-                <button
-                  onClick={() => setActiveTab("htl")}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeTab === "htl"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  HTL
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                {Object.entries(parameters[activeTab]).map(([key, value]) => (
-                  <div key={key} className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-gray-700">
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label>
-                    <input
-                      type="number"
-                      value={value}
-                      onChange={(e) =>
-                        handleParameterChange(
-                          activeTab,
-                          key,
-                          parseFloat(e.target.value)
-                        )
-                      }
-                      className="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </div>
-                ))}
+              <div className="mb-8">
+                <h4 className="text-xl font-semibold mb-4 text-gray-700">
+                  Физические параметры слоёв
+                </h4>
+                <div className="overflow-x-hidden">
+                  <table className="w-full border-collapse border border-gray-300 text-sm">
+                    <thead>
+                      <tr className="bg-gray-50">
+                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                          Параметр
+                        </th>
+                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                          TiO₂
+                        </th>
+                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                          {perovskite}
+                        </th>
+                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                          {htl === "Spiro" ? "Spiro-OMeTAD" : "PEDOT:PSS"}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {parametersOrder.map((paramName, index) => (
+                        <motion.tr
+                          key={paramName}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          className="hover:bg-gray-50"
+                        >
+                          <td className="border border-gray-300 p-3 font-medium">
+                            {paramName}
+                          </td>
+                          <td className="border border-gray-300 p-3">
+                            {getParameterValue("TiO2", paramName)}
+                          </td>
+                          <td className="border border-gray-300 p-3">
+                            {getParameterValue(
+                              perovskite as keyof typeof materialProperties,
+                              paramName
+                            )}
+                          </td>
+                          <td className="border border-gray-300 p-3">
+                            {getParameterValue(
+                              (htl === "Spiro"
+                                ? "Spiro"
+                                : "PEDOT") as keyof typeof materialProperties,
+                              paramName
+                            )}
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </motion.div>

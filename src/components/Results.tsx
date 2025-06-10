@@ -110,14 +110,6 @@ export const Results: React.FC<ResultsProps> = ({
     ],
   };
 
-  // Находим максимальное значение напряжения среди всех конфигураций
-  const maxVoltage = Math.max(
-    ...results.jv.voltage,
-    ...selectedConfigurations.map((config) =>
-      Math.max(...solarCellData[config as ConfigurationKey].jv.v)
-    )
-  );
-
   const eqeData = {
     labels: results.eqe.wavelength.map((w) => w.toFixed(0)),
     datasets: [

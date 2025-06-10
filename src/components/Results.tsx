@@ -610,12 +610,9 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full overflow-x-auto"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[320px] sm:h-[400px] overflow-x-auto sm:overflow-visible"
       >
-        <div
-          className="min-w-[320px] w-full"
-          style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
-        >
+        <div className="w-full">
           <Line options={mobileJvOptions} data={jvData} />
         </div>
       </motion.div>
@@ -624,12 +621,9 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full overflow-x-auto"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[320px] sm:h-[400px] overflow-x-auto sm:overflow-visible"
       >
-        <div
-          className="min-w-[320px] w-full"
-          style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
-        >
+        <div className="w-full">
           <Line options={mobileEqeOptions} data={eqeData} />
         </div>
       </motion.div>
@@ -638,12 +632,9 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full overflow-x-auto"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[320px] sm:h-[400px] overflow-x-auto sm:overflow-visible"
       >
-        <div
-          className="min-w-[320px] w-full"
-          style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
-        >
+        <div className="w-full">
           <Line options={mobilePceOptions} data={pceData} />
         </div>
       </motion.div>

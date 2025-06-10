@@ -616,7 +616,7 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] overflow-x-auto sm:overflow-visible max-w-[420px] mx-auto px-2 sm:max-w-none sm:px-0"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full max-w-[420px] mx-auto px-2 h-[220px] sm:h-[700px]"
       >
         <div className="w-full h-full">
           <Line options={mobileJvOptions} data={jvData} />
@@ -627,7 +627,7 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] overflow-x-auto sm:overflow-visible max-w-[420px] mx-auto px-2 sm:max-w-none sm:px-0"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full max-w-[420px] mx-auto px-2 h-[220px] sm:h-[700px]"
       >
         <div className="w-full h-full">
           <Line options={mobileEqeOptions} data={eqeData} />
@@ -638,7 +638,7 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] overflow-x-auto sm:overflow-visible max-w-[420px] mx-auto px-2 sm:max-w-none sm:px-0"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full max-w-[420px] mx-auto px-2 h-[220px] sm:h-[700px]"
       >
         <div className="w-full h-full">
           <Line options={mobilePceOptions} data={pceData} />

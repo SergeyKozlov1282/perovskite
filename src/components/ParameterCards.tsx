@@ -1,10 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Zap, Battery, Gauge, TrendingUp } from "lucide-react";
-import { SolarCellParams } from "../data/solarCellData";
+import { Battery, Zap, Gauge, TrendingUp } from "lucide-react";
 
 interface ParameterCardsProps {
-  params: SolarCellParams;
+  params: {
+    voc: number;
+    jsc: number;
+    ff: number;
+    pce: number;
+  };
 }
 
 const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
@@ -25,14 +29,14 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
     },
     {
       label: "FF (%)",
-      value: params.ff,
+      value: `${params.ff.toFixed(1)}%`,
       icon: Gauge,
       color: "text-green-600",
       hover: "hover:border-green-600 hover:shadow-green-100",
     },
     {
       label: "КПД (%)",
-      value: params.pce,
+      value: `${params.pce.toFixed(2)}%`,
       icon: TrendingUp,
       color: "text-yellow-600",
       hover: "hover:border-yellow-500 hover:shadow-yellow-100",
@@ -41,7 +45,7 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      {cards.map((card, index) => (
+      {cards.map((card) => (
         <motion.div
           key={card.label}
           initial={{ opacity: 0, y: 20 }}
@@ -54,9 +58,13 @@ const ParameterCards: React.FC<ParameterCardsProps> = ({ params }) => {
             <card.icon className={`w-5 h-5 ${card.color}`} />
           </div>
           <p className="text-xs text-gray-500 mb-1 font-medium tracking-wide">
-            {card.label.split('').map((char, i) => {
-              if (char === 'х' || char === 'к' || char === 'з') {
-                return <span key={i} className="text-[0.85em] align-sub">{char}</span>;
+            {card.label.split("").map((char, i) => {
+              if (char === "х" || char === "к" || char === "з") {
+                return (
+                  <span key={i} className="text-[0.85em] align-sub">
+                    {char}
+                  </span>
+                );
               }
               return char;
             })}

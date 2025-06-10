@@ -248,6 +248,7 @@ export const Results: React.FC<ResultsProps> = ({
         },
       },
     },
+    maintainAspectRatio: false,
   };
 
   const eqeOptions: ChartOptions<"line"> = {
@@ -341,6 +342,7 @@ export const Results: React.FC<ResultsProps> = ({
       mode: "index" as const,
       intersect: false,
     },
+    maintainAspectRatio: false,
   };
 
   const pceOptions: ChartOptions<"line"> = {
@@ -424,6 +426,7 @@ export const Results: React.FC<ResultsProps> = ({
       mode: "index" as const,
       intersect: false,
     },
+    maintainAspectRatio: false,
   };
 
   const mobileJvOptions = {
@@ -460,6 +463,7 @@ export const Results: React.FC<ResultsProps> = ({
         },
       },
     },
+    maintainAspectRatio: false,
   };
 
   const mobileEqeOptions = {
@@ -496,6 +500,7 @@ export const Results: React.FC<ResultsProps> = ({
         },
       },
     },
+    maintainAspectRatio: false,
   };
 
   const mobilePceOptions = {
@@ -532,6 +537,7 @@ export const Results: React.FC<ResultsProps> = ({
         },
       },
     },
+    maintainAspectRatio: false,
   };
 
   const handleConfigSelect = (config: string) => {
@@ -550,7 +556,7 @@ export const Results: React.FC<ResultsProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="sticky top-[76px] z-30 bg-white/60 backdrop-blur border-b border-gray-200 mb-2 rounded-b-xl shadow-sm">
         <div className="flex items-center justify-between px-4 pt-2 pb-2">
           <div className="flex flex-wrap gap-2">
@@ -610,7 +616,7 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[320px] sm:h-[400px] overflow-x-auto sm:overflow-visible"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[340px] overflow-x-auto sm:overflow-visible"
       >
         <div className="w-full">
           <Line options={mobileJvOptions} data={jvData} />
@@ -621,7 +627,7 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[320px] sm:h-[400px] overflow-x-auto sm:overflow-visible"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[340px] overflow-x-auto sm:overflow-visible"
       >
         <div className="w-full">
           <Line options={mobileEqeOptions} data={eqeData} />
@@ -632,7 +638,7 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[320px] sm:h-[400px] overflow-x-auto sm:overflow-visible"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[340px] overflow-x-auto sm:overflow-visible"
       >
         <div className="w-full">
           <Line options={mobilePceOptions} data={pceData} />

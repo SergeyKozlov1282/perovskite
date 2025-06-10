@@ -507,27 +507,168 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full overflow-x-auto"
       >
-        <Line options={jvOptions} data={jvData} />
+        <div
+          className="min-w-[320px] w-full"
+          style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
+        >
+          <Line
+            options={{
+              ...jvOptions,
+              plugins: {
+                ...jvOptions.plugins,
+                legend: {
+                  ...jvOptions.plugins.legend,
+                  labels: {
+                    ...jvOptions.plugins.legend.labels,
+                    font: { size: 10, ...jvOptions.plugins.legend.labels.font },
+                    padding: 10,
+                  },
+                },
+                title: {
+                  ...jvOptions.plugins.title,
+                  font: { size: 14, weight: "bold" },
+                  padding: { top: 6, bottom: 10 },
+                },
+              },
+              scales: {
+                ...jvOptions.scales,
+                x: {
+                  ...jvOptions.scales.x,
+                  title: {
+                    ...jvOptions.scales.x.title,
+                    font: { size: 11 },
+                  },
+                  grid: jvOptions.scales.x.grid,
+                },
+                y: {
+                  ...jvOptions.scales.y,
+                  title: {
+                    ...jvOptions.scales.y.title,
+                    font: { size: 11 },
+                  },
+                  grid: jvOptions.scales.y.grid,
+                },
+              },
+            }}
+            data={jvData}
+          />
+        </div>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full overflow-x-auto"
       >
-        <Line options={eqeOptions} data={eqeData} />
+        <div
+          className="min-w-[320px] w-full"
+          style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
+        >
+          <Line
+            options={{
+              ...eqeOptions,
+              plugins: {
+                ...eqeOptions.plugins,
+                legend: {
+                  ...eqeOptions.plugins.legend,
+                  labels: {
+                    ...eqeOptions.plugins.legend.labels,
+                    font: {
+                      size: 10,
+                      ...eqeOptions.plugins.legend.labels.font,
+                    },
+                    padding: 10,
+                  },
+                },
+                title: {
+                  ...eqeOptions.plugins.title,
+                  font: { size: 14, weight: "bold" },
+                  padding: { top: 6, bottom: 10 },
+                },
+              },
+              scales: {
+                ...eqeOptions.scales,
+                x: {
+                  ...eqeOptions.scales.x,
+                  title: {
+                    ...eqeOptions.scales.x.title,
+                    font: { size: 11 },
+                  },
+                  grid: eqeOptions.scales.x.grid,
+                },
+                y: {
+                  ...eqeOptions.scales.y,
+                  title: {
+                    ...eqeOptions.scales.y.title,
+                    font: { size: 11 },
+                  },
+                  grid: eqeOptions.scales.y.grid,
+                },
+              },
+            }}
+            data={eqeData}
+          />
+        </div>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white p-4 rounded-lg shadow-sm border border-gray-100"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full overflow-x-auto"
       >
-        <Line options={pceOptions} data={pceData} />
+        <div
+          className="min-w-[320px] w-full"
+          style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
+        >
+          <Line
+            options={{
+              ...pceOptions,
+              plugins: {
+                ...pceOptions.plugins,
+                legend: {
+                  ...pceOptions.plugins.legend,
+                  labels: {
+                    ...pceOptions.plugins.legend.labels,
+                    font: {
+                      size: 10,
+                      ...pceOptions.plugins.legend.labels.font,
+                    },
+                    padding: 10,
+                  },
+                },
+                title: {
+                  ...pceOptions.plugins.title,
+                  font: { size: 14, weight: "bold" },
+                  padding: { top: 6, bottom: 10 },
+                },
+              },
+              scales: {
+                ...pceOptions.scales,
+                x: {
+                  ...pceOptions.scales.x,
+                  title: {
+                    ...pceOptions.scales.x.title,
+                    font: { size: 11 },
+                  },
+                  grid: pceOptions.scales.x.grid,
+                },
+                y: {
+                  ...pceOptions.scales.y,
+                  title: {
+                    ...pceOptions.scales.y.title,
+                    font: { size: 11 },
+                  },
+                  grid: pceOptions.scales.y.grid,
+                },
+              },
+            }}
+            data={pceData}
+          />
+        </div>
       </motion.div>
     </div>
   );

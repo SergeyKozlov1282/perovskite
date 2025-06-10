@@ -78,40 +78,40 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-white rounded-xl shadow-xl w-full max-w-2xl overflow-hidden"
+            className="bg-white rounded-xl shadow-xl w-full max-w-xs sm:max-w-lg md:max-w-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-6 border-b">
-              <h2 className="text-xl font-semibold text-gray-800">
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b sticky top-0 bg-white z-10">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
                 Параметры слоёв
               </h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors absolute right-2 top-2 sm:static"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="p-6">
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold mb-4 text-gray-700">
+            <div className="p-3 sm:p-6">
+              <div className="mb-6 sm:mb-8">
+                <h4 className="text-base sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-700">
                   Физические параметры слоёв
                 </h4>
-                <div className="overflow-x-hidden">
-                  <table className="w-full border-collapse border border-gray-300 text-sm">
+                <div className="overflow-x-auto">
+                  <table className="min-w-[400px] w-full border-collapse border border-gray-300 text-xs sm:text-sm">
                     <thead>
                       <tr className="bg-gray-50">
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                        <th className="border border-gray-300 p-2 sm:p-3 text-left font-semibold">
                           Параметр
                         </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                        <th className="border border-gray-300 p-2 sm:p-3 text-left font-semibold">
                           TiO₂
                         </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                        <th className="border border-gray-300 p-2 sm:p-3 text-left font-semibold">
                           {perovskite}
                         </th>
-                        <th className="border border-gray-300 p-3 text-left font-semibold">
+                        <th className="border border-gray-300 p-2 sm:p-3 text-left font-semibold">
                           {htl === "Spiro" ? "Spiro-OMeTAD" : "PEDOT:PSS"}
                         </th>
                       </tr>
@@ -125,19 +125,19 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
                           transition={{ delay: index * 0.05 }}
                           className="hover:bg-gray-50"
                         >
-                          <td className="border border-gray-300 p-3 font-medium">
+                          <td className="border border-gray-300 p-2 sm:p-3 font-medium">
                             {paramName}
                           </td>
-                          <td className="border border-gray-300 p-3">
+                          <td className="border border-gray-300 p-2 sm:p-3">
                             {getParameterValue("TiO2", paramName)}
                           </td>
-                          <td className="border border-gray-300 p-3">
+                          <td className="border border-gray-300 p-2 sm:p-3">
                             {getParameterValue(
                               perovskite as keyof typeof materialProperties,
                               paramName
                             )}
                           </td>
-                          <td className="border border-gray-300 p-3">
+                          <td className="border border-gray-300 p-2 sm:p-3">
                             {getParameterValue(
                               (htl === "Spiro"
                                 ? "Spiro"

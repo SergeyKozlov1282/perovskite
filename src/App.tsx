@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Settings, ChevronDown, ChevronUp } from "lucide-react";
 import Header from "./components/Header";
 import LayerStructure from "./components/LayerStructure";
 import ParameterCards from "./components/ParameterCards";
-import ComparisonPanel from "./components/ComparisonPanel";
 import ParametersModal from "./components/ParametersModal";
 import Results from "./components/Results";
 import { solarCellData, ConfigurationKey } from "./data/solarCellData";
-
-const chartColors = [
-  "#05336e", // ЛЭТИ Blue
-  "#bb8d54", // ЛЭТИ Gold
-  "#6d6e71", // ЛЭТИ Gray
-  "#4CAF50",
-  "#FFC107",
-  "#E91E63",
-];
 
 function App() {
   const [perovskite, setPerovskite] = useState("MAPbI3");

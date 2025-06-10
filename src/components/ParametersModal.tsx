@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { solarCellData } from "../data/solarCellData";
-import {
-  materialProperties,
-  defectProperties,
-} from "../data/materialProperties";
+import { materialProperties } from "../data/materialProperties";
 
 interface ParametersModalProps {
   isOpen: boolean;

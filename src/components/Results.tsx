@@ -13,6 +13,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+import type { ChartOptions } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -166,13 +167,7 @@ export const Results: React.FC<ResultsProps> = ({
     ],
   };
 
-  const baseGrid = {
-    color: "rgba(0,0,0,0.07)",
-    borderDash: [4, 4],
-    drawBorder: false,
-  };
-
-  const jvOptions = {
+  const jvOptions: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -180,7 +175,7 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { ...jvOptions.plugins.legend.labels.font, size: 10 },
+          font: { size: 14 },
           padding: 18,
         },
       },
@@ -226,10 +221,6 @@ export const Results: React.FC<ResultsProps> = ({
           },
         },
       },
-      animation: {
-        duration: 1200,
-        easing: "easeInOutQuart",
-      },
     },
     interaction: {
       mode: "index" as const,
@@ -240,22 +231,26 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Напряжение (Vхх)",
-          font: { ...jvOptions.scales.x.title.font, size: 14 },
+          font: { size: 14 },
         },
-        grid: baseGrid,
+        grid: {
+          color: "rgba(0,0,0,0.07)",
+        },
       },
       y: {
         title: {
           display: true,
           text: "Плотность тока (Jкз, мА/см²)",
-          font: { ...jvOptions.scales.y.title.font, size: 14 },
+          font: { size: 14 },
         },
-        grid: baseGrid,
+        grid: {
+          color: "rgba(0,0,0,0.07)",
+        },
       },
     },
   };
 
-  const eqeOptions = {
+  const eqeOptions: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -263,7 +258,7 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { ...eqeOptions.plugins.legend.labels.font, size: 10 },
+          font: { size: 14 },
           padding: 18,
         },
       },
@@ -309,29 +304,29 @@ export const Results: React.FC<ResultsProps> = ({
           },
         },
       },
-      animation: {
-        duration: 1200,
-        easing: "easeInOutQuart",
-      },
     },
     scales: {
       x: {
         title: {
           display: true,
           text: "Длина волны (нм)",
-          font: { ...eqeOptions.scales.x.title.font, size: 14 },
+          font: { size: 14 },
         },
-        grid: baseGrid,
+        grid: {
+          color: "rgba(0,0,0,0.07)",
+        },
       },
       y: {
         title: {
           display: true,
           text: "КЭ (%)",
-          font: { ...eqeOptions.scales.y.title.font, size: 14 },
+          font: { size: 14 },
         },
         min: 0,
         max: 105,
-        grid: baseGrid,
+        grid: {
+          color: "rgba(0,0,0,0.07)",
+        },
         beginAtZero: true,
         ticks: {
           padding: 10,
@@ -348,7 +343,7 @@ export const Results: React.FC<ResultsProps> = ({
     },
   };
 
-  const pceOptions = {
+  const pceOptions: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -356,7 +351,7 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { ...pceOptions.plugins.legend.labels.font, size: 10 },
+          font: { size: 14 },
           padding: 18,
         },
       },
@@ -402,32 +397,140 @@ export const Results: React.FC<ResultsProps> = ({
           },
         },
       },
-      animation: {
-        duration: 1200,
-        easing: "easeInOutQuart",
-      },
     },
     scales: {
       x: {
         title: {
           display: true,
           text: "Толщина (мкм)",
-          font: { ...pceOptions.scales.x.title.font, size: 14 },
+          font: { size: 14 },
         },
-        grid: baseGrid,
+        grid: {
+          color: "rgba(0,0,0,0.07)",
+        },
       },
       y: {
         title: {
           display: true,
           text: "КПД (%)",
-          font: { ...pceOptions.scales.y.title.font, size: 14 },
+          font: { size: 14 },
         },
-        grid: baseGrid,
+        grid: {
+          color: "rgba(0,0,0,0.07)",
+        },
       },
     },
     interaction: {
       mode: "index" as const,
       intersect: false,
+    },
+  };
+
+  const mobileJvOptions = {
+    ...jvOptions,
+    plugins: {
+      legend: {
+        ...jvOptions.plugins?.legend,
+        labels: {
+          ...jvOptions.plugins?.legend?.labels,
+          font: { ...jvOptions.plugins?.legend?.labels?.font, size: 10 },
+          padding: 10,
+        },
+      },
+      title: {
+        ...jvOptions.plugins?.title,
+        font: { size: 14, weight: "bold" as const },
+        padding: { top: 6, bottom: 10 },
+      },
+    },
+    scales: {
+      ...jvOptions.scales,
+      x: {
+        ...jvOptions.scales?.x,
+        title: {
+          ...jvOptions.scales?.x?.title,
+          font: { ...jvOptions.scales?.x?.title?.font, size: 11 },
+        },
+      },
+      y: {
+        ...jvOptions.scales?.y,
+        title: {
+          ...jvOptions.scales?.y?.title,
+          font: { ...jvOptions.scales?.y?.title?.font, size: 11 },
+        },
+      },
+    },
+  };
+
+  const mobileEqeOptions = {
+    ...eqeOptions,
+    plugins: {
+      legend: {
+        ...eqeOptions.plugins?.legend,
+        labels: {
+          ...eqeOptions.plugins?.legend?.labels,
+          font: { ...eqeOptions.plugins?.legend?.labels?.font, size: 10 },
+          padding: 10,
+        },
+      },
+      title: {
+        ...eqeOptions.plugins?.title,
+        font: { size: 14, weight: "bold" as const },
+        padding: { top: 6, bottom: 10 },
+      },
+    },
+    scales: {
+      ...eqeOptions.scales,
+      x: {
+        ...eqeOptions.scales?.x,
+        title: {
+          ...eqeOptions.scales?.x?.title,
+          font: { ...eqeOptions.scales?.x?.title?.font, size: 11 },
+        },
+      },
+      y: {
+        ...eqeOptions.scales?.y,
+        title: {
+          ...eqeOptions.scales?.y?.title,
+          font: { ...eqeOptions.scales?.y?.title?.font, size: 11 },
+        },
+      },
+    },
+  };
+
+  const mobilePceOptions = {
+    ...pceOptions,
+    plugins: {
+      legend: {
+        ...pceOptions.plugins?.legend,
+        labels: {
+          ...pceOptions.plugins?.legend?.labels,
+          font: { ...pceOptions.plugins?.legend?.labels?.font, size: 10 },
+          padding: 10,
+        },
+      },
+      title: {
+        ...pceOptions.plugins?.title,
+        font: { size: 14, weight: "bold" as const },
+        padding: { top: 6, bottom: 10 },
+      },
+    },
+    scales: {
+      ...pceOptions.scales,
+      x: {
+        ...pceOptions.scales?.x,
+        title: {
+          ...pceOptions.scales?.x?.title,
+          font: { ...pceOptions.scales?.x?.title?.font, size: 11 },
+        },
+      },
+      y: {
+        ...pceOptions.scales?.y,
+        title: {
+          ...pceOptions.scales?.y?.title,
+          font: { ...pceOptions.scales?.y?.title?.font, size: 11 },
+        },
+      },
     },
   };
 
@@ -513,47 +616,7 @@ export const Results: React.FC<ResultsProps> = ({
           className="min-w-[320px] w-full"
           style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
         >
-          <Line
-            options={{
-              ...jvOptions,
-              plugins: {
-                ...jvOptions.plugins,
-                legend: {
-                  ...jvOptions.plugins.legend,
-                  labels: {
-                    ...jvOptions.plugins.legend.labels,
-                    font: { ...jvOptions.plugins.legend.labels.font, size: 10 },
-                    padding: 10,
-                  },
-                },
-                title: {
-                  ...jvOptions.plugins.title,
-                  font: { size: 14, weight: "bold" },
-                  padding: { top: 6, bottom: 10 },
-                },
-              },
-              scales: {
-                ...jvOptions.scales,
-                x: {
-                  ...jvOptions.scales.x,
-                  title: {
-                    ...jvOptions.scales.x.title,
-                    font: { ...jvOptions.scales.x.title.font, size: 11 },
-                  },
-                  grid: jvOptions.scales.x.grid,
-                },
-                y: {
-                  ...jvOptions.scales.y,
-                  title: {
-                    ...jvOptions.scales.y.title,
-                    font: { ...jvOptions.scales.y.title.font, size: 11 },
-                  },
-                  grid: jvOptions.scales.y.grid,
-                },
-              },
-            }}
-            data={jvData}
-          />
+          <Line options={mobileJvOptions} data={jvData} />
         </div>
       </motion.div>
 
@@ -567,50 +630,7 @@ export const Results: React.FC<ResultsProps> = ({
           className="min-w-[320px] w-full"
           style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
         >
-          <Line
-            options={{
-              ...eqeOptions,
-              plugins: {
-                ...eqeOptions.plugins,
-                legend: {
-                  ...eqeOptions.plugins.legend,
-                  labels: {
-                    ...eqeOptions.plugins.legend.labels,
-                    font: {
-                      ...eqeOptions.plugins.legend.labels.font,
-                      size: 10,
-                    },
-                    padding: 10,
-                  },
-                },
-                title: {
-                  ...eqeOptions.plugins.title,
-                  font: { size: 14, weight: "bold" },
-                  padding: { top: 6, bottom: 10 },
-                },
-              },
-              scales: {
-                ...eqeOptions.scales,
-                x: {
-                  ...eqeOptions.scales.x,
-                  title: {
-                    ...eqeOptions.scales.x.title,
-                    font: { ...eqeOptions.scales.x.title.font, size: 11 },
-                  },
-                  grid: eqeOptions.scales.x.grid,
-                },
-                y: {
-                  ...eqeOptions.scales.y,
-                  title: {
-                    ...eqeOptions.scales.y.title,
-                    font: { ...eqeOptions.scales.y.title.font, size: 11 },
-                  },
-                  grid: eqeOptions.scales.y.grid,
-                },
-              },
-            }}
-            data={eqeData}
-          />
+          <Line options={mobileEqeOptions} data={eqeData} />
         </div>
       </motion.div>
 
@@ -624,50 +644,7 @@ export const Results: React.FC<ResultsProps> = ({
           className="min-w-[320px] w-full"
           style={{ height: "220px", minHeight: "220px", maxHeight: "320px" }}
         >
-          <Line
-            options={{
-              ...pceOptions,
-              plugins: {
-                ...pceOptions.plugins,
-                legend: {
-                  ...pceOptions.plugins.legend,
-                  labels: {
-                    ...pceOptions.plugins.legend.labels,
-                    font: {
-                      ...pceOptions.plugins.legend.labels.font,
-                      size: 10,
-                    },
-                    padding: 10,
-                  },
-                },
-                title: {
-                  ...pceOptions.plugins.title,
-                  font: { size: 14, weight: "bold" },
-                  padding: { top: 6, bottom: 10 },
-                },
-              },
-              scales: {
-                ...pceOptions.scales,
-                x: {
-                  ...pceOptions.scales.x,
-                  title: {
-                    ...pceOptions.scales.x.title,
-                    font: { ...pceOptions.scales.x.title.font, size: 11 },
-                  },
-                  grid: pceOptions.scales.x.grid,
-                },
-                y: {
-                  ...pceOptions.scales.y,
-                  title: {
-                    ...pceOptions.scales.y.title,
-                    font: { ...pceOptions.scales.y.title.font, size: 11 },
-                  },
-                  grid: pceOptions.scales.y.grid,
-                },
-              },
-            }}
-            data={pceData}
-          />
+          <Line options={mobilePceOptions} data={pceData} />
         </div>
       </motion.div>
     </div>

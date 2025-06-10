@@ -78,7 +78,7 @@ const ParametersModal: React.FC<ParametersModalProps> = ({
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-white rounded-none sm:rounded-xl shadow-xl w-full max-w-full sm:max-w-lg md:max-w-2xl overflow-hidden relative"
+            className="bg-white rounded-lg sm:rounded-xl shadow-xl w-full max-w-full sm:max-w-lg md:max-w-2xl overflow-hidden relative"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-2 sm:p-6 border-b sticky top-0 bg-white z-10">

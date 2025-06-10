@@ -180,7 +180,7 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { size: 14 },
+          font: { ...jvOptions.plugins.legend.labels.font, size: 10 },
           padding: 18,
         },
       },
@@ -240,7 +240,7 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Напряжение (Vхх)",
-          font: { size: 14 },
+          font: { ...jvOptions.scales.x.title.font, size: 14 },
         },
         grid: baseGrid,
       },
@@ -248,7 +248,7 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Плотность тока (Jкз, мА/см²)",
-          font: { size: 14 },
+          font: { ...jvOptions.scales.y.title.font, size: 14 },
         },
         grid: baseGrid,
       },
@@ -263,7 +263,7 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { size: 14 },
+          font: { ...eqeOptions.plugins.legend.labels.font, size: 10 },
           padding: 18,
         },
       },
@@ -319,7 +319,7 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Длина волны (нм)",
-          font: { size: 14 },
+          font: { ...eqeOptions.scales.x.title.font, size: 14 },
         },
         grid: baseGrid,
       },
@@ -327,7 +327,7 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "КЭ (%)",
-          font: { size: 14 },
+          font: { ...eqeOptions.scales.y.title.font, size: 14 },
         },
         min: 0,
         max: 105,
@@ -356,7 +356,7 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { size: 14 },
+          font: { ...pceOptions.plugins.legend.labels.font, size: 10 },
           padding: 18,
         },
       },
@@ -412,7 +412,7 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Толщина (мкм)",
-          font: { size: 14 },
+          font: { ...pceOptions.scales.x.title.font, size: 14 },
         },
         grid: baseGrid,
       },
@@ -420,7 +420,7 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "КПД (%)",
-          font: { size: 14 },
+          font: { ...pceOptions.scales.y.title.font, size: 14 },
         },
         grid: baseGrid,
       },
@@ -522,7 +522,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...jvOptions.plugins.legend,
                   labels: {
                     ...jvOptions.plugins.legend.labels,
-                    font: { size: 10, ...jvOptions.plugins.legend.labels.font },
+                    font: { ...jvOptions.plugins.legend.labels.font, size: 10 },
                     padding: 10,
                   },
                 },
@@ -538,7 +538,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...jvOptions.scales.x,
                   title: {
                     ...jvOptions.scales.x.title,
-                    font: { size: 11 },
+                    font: { ...jvOptions.scales.x.title.font, size: 11 },
                   },
                   grid: jvOptions.scales.x.grid,
                 },
@@ -546,7 +546,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...jvOptions.scales.y,
                   title: {
                     ...jvOptions.scales.y.title,
-                    font: { size: 11 },
+                    font: { ...jvOptions.scales.y.title.font, size: 11 },
                   },
                   grid: jvOptions.scales.y.grid,
                 },
@@ -577,8 +577,8 @@ export const Results: React.FC<ResultsProps> = ({
                   labels: {
                     ...eqeOptions.plugins.legend.labels,
                     font: {
-                      size: 10,
                       ...eqeOptions.plugins.legend.labels.font,
+                      size: 10,
                     },
                     padding: 10,
                   },
@@ -595,7 +595,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...eqeOptions.scales.x,
                   title: {
                     ...eqeOptions.scales.x.title,
-                    font: { size: 11 },
+                    font: { ...eqeOptions.scales.x.title.font, size: 11 },
                   },
                   grid: eqeOptions.scales.x.grid,
                 },
@@ -603,7 +603,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...eqeOptions.scales.y,
                   title: {
                     ...eqeOptions.scales.y.title,
-                    font: { size: 11 },
+                    font: { ...eqeOptions.scales.y.title.font, size: 11 },
                   },
                   grid: eqeOptions.scales.y.grid,
                 },
@@ -634,8 +634,8 @@ export const Results: React.FC<ResultsProps> = ({
                   labels: {
                     ...pceOptions.plugins.legend.labels,
                     font: {
-                      size: 10,
                       ...pceOptions.plugins.legend.labels.font,
+                      size: 10,
                     },
                     padding: 10,
                   },
@@ -652,7 +652,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...pceOptions.scales.x,
                   title: {
                     ...pceOptions.scales.x.title,
-                    font: { size: 11 },
+                    font: { ...pceOptions.scales.x.title.font, size: 11 },
                   },
                   grid: pceOptions.scales.x.grid,
                 },
@@ -660,7 +660,7 @@ export const Results: React.FC<ResultsProps> = ({
                   ...pceOptions.scales.y,
                   title: {
                     ...pceOptions.scales.y.title,
-                    font: { size: 11 },
+                    font: { ...pceOptions.scales.y.title.font, size: 11 },
                   },
                   grid: pceOptions.scales.y.grid,
                 },

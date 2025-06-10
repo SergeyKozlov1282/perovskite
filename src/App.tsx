@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Settings, ChevronDown, ChevronUp } from "lucide-react";
 import Header from "./components/Header";
@@ -11,9 +11,7 @@ import { solarCellData, ConfigurationKey } from "./data/solarCellData";
 function App() {
   const [perovskite, setPerovskite] = useState("MAPbI3");
   const [htl, setHtl] = useState("Spiro");
-  const [selectedConfigurations, setSelectedConfigurations] = useState<
-    string[]
-  >([]);
+  const [selectedConfigurations] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showResults, setShowResults] = useState(false);
 

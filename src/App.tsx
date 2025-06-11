@@ -7,6 +7,7 @@ import ParameterCards from "./components/ParameterCards";
 import ParametersModal from "./components/ParametersModal";
 import Results from "./components/Results";
 import { solarCellData, ConfigurationKey } from "./data/solarCellData";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [perovskite, setPerovskite] = useState("MAPbI3");
@@ -153,6 +154,7 @@ function App() {
         perovskite={perovskite}
         htl={htl}
       />
+      <Analytics />
     </div>
   );
 }

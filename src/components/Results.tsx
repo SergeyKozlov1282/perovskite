@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Line } from "react-chartjs-2";
 import { solarCellData, ConfigurationKey } from "../data/solarCellData";
@@ -12,8 +12,10 @@ import {
   Tooltip,
   Legend,
   Filler,
+  ChartType,
 } from "chart.js";
 import type { ChartOptions } from "chart.js";
+import { Download } from "lucide-react";
 
 ChartJS.register(
   CategoryScale,
@@ -65,6 +67,10 @@ export const Results: React.FC<ResultsProps> = ({
   const [selectedConfigurations, setSelectedConfigurations] = useState<
     string[]
   >(initialSelectedConfigurations || []);
+
+  const jvChartRef = useRef<ChartJS<"line">>(null);
+  const eqeChartRef = useRef<ChartJS<"line">>(null);
+  const pceChartRef = useRef<ChartJS<"line">>(null);
 
   const getColorForConfig = (config: string) => {
     if (config === currentKey) {
@@ -175,14 +181,14 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { size: 14 },
+          font: { size: 16 },
           padding: 18,
         },
       },
       title: {
         display: true,
         text: "Вольт-амперная характеристика",
-        font: { size: 18, weight: "bold" as const },
+        font: { size: 22, weight: "bold" as const },
         color: "#222",
         padding: { top: 10, bottom: 20 },
       },
@@ -202,11 +208,11 @@ export const Results: React.FC<ResultsProps> = ({
         boxPadding: 4,
         usePointStyle: true,
         titleFont: {
-          size: 13,
+          size: 15,
           weight: "bold" as const,
         },
         bodyFont: {
-          size: 12,
+          size: 14,
         },
         callbacks: {
           label: function (context: any) {
@@ -231,20 +237,26 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Напряжение (Vхх)",
-          font: { size: 14 },
+          font: { size: 16 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
+        },
+        ticks: {
+          font: { size: 14 },
         },
       },
       y: {
         title: {
           display: true,
           text: "Плотность тока (Jкз, мА/см²)",
-          font: { size: 14 },
+          font: { size: 16 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
+        },
+        ticks: {
+          font: { size: 14 },
         },
       },
     },
@@ -259,14 +271,14 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { size: 14 },
+          font: { size: 16 },
           padding: 18,
         },
       },
       title: {
         display: true,
         text: "Внешняя квантовая эффективность",
-        font: { size: 18, weight: "bold" as const },
+        font: { size: 22, weight: "bold" as const },
         color: "#222",
         padding: { top: 10, bottom: 20 },
       },
@@ -286,11 +298,11 @@ export const Results: React.FC<ResultsProps> = ({
         boxPadding: 4,
         usePointStyle: true,
         titleFont: {
-          size: 13,
+          size: 15,
           weight: "bold" as const,
         },
         bodyFont: {
-          size: 12,
+          size: 14,
         },
         callbacks: {
           label: function (context: any) {
@@ -311,17 +323,20 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Длина волны (нм)",
-          font: { size: 14 },
+          font: { size: 16 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
+        },
+        ticks: {
+          font: { size: 14 },
         },
       },
       y: {
         title: {
           display: true,
           text: "КЭ (%)",
-          font: { size: 14 },
+          font: { size: 16 },
         },
         min: 0,
         max: 105,
@@ -331,6 +346,7 @@ export const Results: React.FC<ResultsProps> = ({
         beginAtZero: true,
         ticks: {
           padding: 10,
+          font: { size: 14 },
           callback: function (tickValue: number | string) {
             const value = Number(tickValue);
             return value <= 100 ? value : "";
@@ -353,14 +369,14 @@ export const Results: React.FC<ResultsProps> = ({
         labels: {
           boxWidth: 18,
           boxHeight: 3,
-          font: { size: 14 },
+          font: { size: 16 },
           padding: 18,
         },
       },
       title: {
         display: true,
         text: "Зависимость эффективности от толщины",
-        font: { size: 18, weight: "bold" as const },
+        font: { size: 22, weight: "bold" as const },
         color: "#222",
         padding: { top: 10, bottom: 20 },
       },
@@ -380,11 +396,11 @@ export const Results: React.FC<ResultsProps> = ({
         boxPadding: 4,
         usePointStyle: true,
         titleFont: {
-          size: 13,
+          size: 15,
           weight: "bold" as const,
         },
         bodyFont: {
-          size: 12,
+          size: 14,
         },
         callbacks: {
           label: function (context: any) {
@@ -405,20 +421,26 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Толщина (мкм)",
-          font: { size: 14 },
+          font: { size: 16 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
+        },
+        ticks: {
+          font: { size: 14 },
         },
       },
       y: {
         title: {
           display: true,
           text: "КПД (%)",
-          font: { size: 14 },
+          font: { size: 16 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
+        },
+        ticks: {
+          font: { size: 14 },
         },
       },
     },
@@ -436,13 +458,13 @@ export const Results: React.FC<ResultsProps> = ({
         ...jvOptions.plugins?.legend,
         labels: {
           ...jvOptions.plugins?.legend?.labels,
-          font: { ...jvOptions.plugins?.legend?.labels?.font, size: 10 },
+          font: { ...jvOptions.plugins?.legend?.labels?.font, size: 14 },
           padding: 10,
         },
       },
       title: {
         ...jvOptions.plugins?.title,
-        font: { size: 14, weight: "bold" as const },
+        font: { size: 18, weight: "bold" as const },
         padding: { top: 6, bottom: 10 },
       },
     },
@@ -452,14 +474,20 @@ export const Results: React.FC<ResultsProps> = ({
         ...jvOptions.scales?.x,
         title: {
           ...jvOptions.scales?.x?.title,
-          font: { ...jvOptions.scales?.x?.title?.font, size: 11 },
+          font: { ...jvOptions.scales?.x?.title?.font, size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
         },
       },
       y: {
         ...jvOptions.scales?.y,
         title: {
           ...jvOptions.scales?.y?.title,
-          font: { ...jvOptions.scales?.y?.title?.font, size: 11 },
+          font: { ...jvOptions.scales?.y?.title?.font, size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
         },
       },
     },
@@ -473,13 +501,13 @@ export const Results: React.FC<ResultsProps> = ({
         ...eqeOptions.plugins?.legend,
         labels: {
           ...eqeOptions.plugins?.legend?.labels,
-          font: { ...eqeOptions.plugins?.legend?.labels?.font, size: 10 },
+          font: { ...eqeOptions.plugins?.legend?.labels?.font, size: 14 },
           padding: 10,
         },
       },
       title: {
         ...eqeOptions.plugins?.title,
-        font: { size: 14, weight: "bold" as const },
+        font: { size: 18, weight: "bold" as const },
         padding: { top: 6, bottom: 10 },
       },
     },
@@ -489,14 +517,20 @@ export const Results: React.FC<ResultsProps> = ({
         ...eqeOptions.scales?.x,
         title: {
           ...eqeOptions.scales?.x?.title,
-          font: { ...eqeOptions.scales?.x?.title?.font, size: 11 },
+          font: { ...eqeOptions.scales?.x?.title?.font, size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
         },
       },
       y: {
         ...eqeOptions.scales?.y,
         title: {
           ...eqeOptions.scales?.y?.title,
-          font: { ...eqeOptions.scales?.y?.title?.font, size: 11 },
+          font: { ...eqeOptions.scales?.y?.title?.font, size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
         },
       },
     },
@@ -510,13 +544,13 @@ export const Results: React.FC<ResultsProps> = ({
         ...pceOptions.plugins?.legend,
         labels: {
           ...pceOptions.plugins?.legend?.labels,
-          font: { ...pceOptions.plugins?.legend?.labels?.font, size: 10 },
+          font: { ...pceOptions.plugins?.legend?.labels?.font, size: 14 },
           padding: 10,
         },
       },
       title: {
         ...pceOptions.plugins?.title,
-        font: { size: 14, weight: "bold" as const },
+        font: { size: 18, weight: "bold" as const },
         padding: { top: 6, bottom: 10 },
       },
     },
@@ -526,14 +560,20 @@ export const Results: React.FC<ResultsProps> = ({
         ...pceOptions.scales?.x,
         title: {
           ...pceOptions.scales?.x?.title,
-          font: { ...pceOptions.scales?.x?.title?.font, size: 11 },
+          font: { ...pceOptions.scales?.x?.title?.font, size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
         },
       },
       y: {
         ...pceOptions.scales?.y,
         title: {
           ...pceOptions.scales?.y?.title,
-          font: { ...pceOptions.scales?.y?.title?.font, size: 11 },
+          font: { ...pceOptions.scales?.y?.title?.font, size: 14 },
+        },
+        ticks: {
+          font: { size: 12 },
         },
       },
     },
@@ -553,6 +593,20 @@ export const Results: React.FC<ResultsProps> = ({
 
   const handleClearAll = () => {
     setSelectedConfigurations([]);
+  };
+
+  const downloadChart = (
+    chartRef: React.RefObject<ChartJS>,
+    filename: string
+  ) => {
+    if (chartRef.current) {
+      const canvas = chartRef.current.canvas;
+      const image = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.download = filename;
+      link.href = image;
+      link.click();
+    }
   };
 
   return (
@@ -616,10 +670,17 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] max-w-[420px] mx-auto px-2 sm:max-w-none sm:mx-0 sm:px-0"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] max-w-[420px] mx-auto px-2 sm:max-w-none sm:mx-0 sm:px-0 relative"
       >
+        <button
+          onClick={() => downloadChart(jvChartRef, "jv-characteristic.png")}
+          className="absolute top-2 right-2 z-10 p-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
+          title="Скачать график"
+        >
+          <Download className="w-5 h-5" />
+        </button>
         <div className="w-full h-full">
-          <Line options={mobileJvOptions} data={jvData} />
+          <Line ref={jvChartRef} options={mobileJvOptions} data={jvData} />
         </div>
       </motion.div>
 
@@ -627,10 +688,17 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] max-w-[420px] mx-auto px-2 sm:max-w-none sm:mx-0 sm:px-0"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] max-w-[420px] mx-auto px-2 sm:max-w-none sm:mx-0 sm:px-0 relative"
       >
+        <button
+          onClick={() => downloadChart(eqeChartRef, "eqe-characteristic.png")}
+          className="absolute top-2 right-2 z-10 p-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
+          title="Скачать график"
+        >
+          <Download className="w-5 h-5" />
+        </button>
         <div className="w-full h-full">
-          <Line options={mobileEqeOptions} data={eqeData} />
+          <Line ref={eqeChartRef} options={mobileEqeOptions} data={eqeData} />
         </div>
       </motion.div>
 
@@ -638,10 +706,17 @@ export const Results: React.FC<ResultsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] max-w-[420px] mx-auto px-2 sm:max-w-none sm:mx-0 sm:px-0"
+        className="bg-white p-2 sm:p-4 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 w-full h-[220px] sm:h-[700px] max-w-[420px] mx-auto px-2 sm:max-w-none sm:mx-0 sm:px-0 relative"
       >
+        <button
+          onClick={() => downloadChart(pceChartRef, "pce-characteristic.png")}
+          className="absolute top-2 right-2 z-10 p-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
+          title="Скачать график"
+        >
+          <Download className="w-5 h-5" />
+        </button>
         <div className="w-full h-full">
-          <Line options={mobilePceOptions} data={pceData} />
+          <Line ref={pceChartRef} options={mobilePceOptions} data={pceData} />
         </div>
       </motion.div>
     </div>

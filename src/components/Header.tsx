@@ -6,27 +6,22 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="bg-gray-900/90 text-white sticky top-0 z-50 shadow-lg backdrop-blur-sm"
-    >
+    <header className="bg-gray-900/90 text-white sticky top-0 z-50 shadow-lg backdrop-blur-sm">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <motion.div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3">
             <h1 className="text-xl md:text-2xl font-bold">
               Инструмент моделирования ПСЭ
             </h1>
-          </motion.div>
+          </div>
 
           <nav className="hidden md:flex space-x-8 text-lg">
-            <motion.a
+            <a
               href="#explorer"
               className="py-2 border-b-2 border-transparent hover:border-yellow-400 transition-colors"
-              whileHover={{ y: -2 }}
             >
               Исследование конфигураций
-            </motion.a>
+            </a>
           </nav>
 
           <div className="md:hidden">
@@ -62,7 +57,7 @@ const Header: React.FC = () => {
           </a>
         </motion.div>
       </div>
-    </motion.header>
+    </header>
   );
 };
 

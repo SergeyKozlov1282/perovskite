@@ -178,18 +178,18 @@ export const Results: React.FC<ResultsProps> = ({
       legend: {
         position: "top" as const,
         labels: {
-          boxWidth: 18,
-          boxHeight: 3,
-          font: { size: 16 },
-          padding: 18,
+          boxWidth: 24,
+          boxHeight: 5,
+          font: { size: 24 },
+          padding: 24,
         },
       },
       title: {
         display: true,
         text: "Вольт-амперная характеристика",
-        font: { size: 22, weight: "bold" as const },
+        font: { size: 32, weight: "bold" as const },
         color: "#222",
-        padding: { top: 10, bottom: 20 },
+        padding: { top: 12, bottom: 24 },
       },
       tooltip: {
         backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -197,21 +197,21 @@ export const Results: React.FC<ResultsProps> = ({
         bodyColor: "#4a5568",
         borderColor: "#e2e8f0",
         borderWidth: 1,
-        padding: 12,
+        padding: 14,
         cornerRadius: 8,
         displayColors: true,
         mode: "index" as const,
         intersect: false,
-        boxWidth: 8,
-        boxHeight: 8,
-        boxPadding: 4,
+        boxWidth: 10,
+        boxHeight: 10,
+        boxPadding: 5,
         usePointStyle: true,
         titleFont: {
-          size: 15,
+          size: 22,
           weight: "bold" as const,
         },
         bodyFont: {
-          size: 14,
+          size: 20,
         },
         callbacks: {
           label: function (context: any) {
@@ -236,26 +236,26 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Напряжение (Vхх)",
-          font: { size: 16 },
+          font: { size: 24 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
         },
         ticks: {
-          font: { size: 14 },
+          font: { size: 20 },
         },
       },
       y: {
         title: {
           display: true,
           text: "Плотность тока (Jкз, мА/см²)",
-          font: { size: 16 },
+          font: { size: 24 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
         },
         ticks: {
-          font: { size: 14 },
+          font: { size: 20 },
         },
       },
     },
@@ -268,18 +268,18 @@ export const Results: React.FC<ResultsProps> = ({
       legend: {
         position: "top" as const,
         labels: {
-          boxWidth: 18,
-          boxHeight: 3,
-          font: { size: 16 },
-          padding: 18,
+          boxWidth: 24,
+          boxHeight: 5,
+          font: { size: 24 },
+          padding: 24,
         },
       },
       title: {
         display: true,
         text: "Внешняя квантовая эффективность",
-        font: { size: 22, weight: "bold" as const },
+        font: { size: 32, weight: "bold" as const },
         color: "#222",
-        padding: { top: 10, bottom: 20 },
+        padding: { top: 12, bottom: 24 },
       },
       tooltip: {
         backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -287,21 +287,21 @@ export const Results: React.FC<ResultsProps> = ({
         bodyColor: "#4a5568",
         borderColor: "#e2e8f0",
         borderWidth: 1,
-        padding: 12,
+        padding: 14,
         cornerRadius: 8,
         displayColors: true,
         mode: "index" as const,
         intersect: false,
-        boxWidth: 8,
-        boxHeight: 8,
-        boxPadding: 4,
+        boxWidth: 10,
+        boxHeight: 10,
+        boxPadding: 5,
         usePointStyle: true,
         titleFont: {
-          size: 15,
+          size: 22,
           weight: "bold" as const,
         },
         bodyFont: {
-          size: 14,
+          size: 20,
         },
         callbacks: {
           label: function (context: any) {
@@ -322,20 +322,20 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Длина волны (нм)",
-          font: { size: 16 },
+          font: { size: 24 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
         },
         ticks: {
-          font: { size: 14 },
+          font: { size: 20 },
         },
       },
       y: {
         title: {
           display: true,
           text: "КЭ (%)",
-          font: { size: 16 },
+          font: { size: 24 },
         },
         min: 0,
         max: 105,
@@ -344,8 +344,8 @@ export const Results: React.FC<ResultsProps> = ({
         },
         beginAtZero: true,
         ticks: {
-          padding: 10,
-          font: { size: 14 },
+          padding: 12,
+          font: { size: 20 },
           callback: function (tickValue: number | string) {
             const value = Number(tickValue);
             return value <= 100 ? value : "";
@@ -366,18 +366,18 @@ export const Results: React.FC<ResultsProps> = ({
       legend: {
         position: "top" as const,
         labels: {
-          boxWidth: 18,
-          boxHeight: 3,
-          font: { size: 16 },
-          padding: 18,
+          boxWidth: 24,
+          boxHeight: 5,
+          font: { size: 24 },
+          padding: 24,
         },
       },
       title: {
         display: true,
         text: "Зависимость эффективности от толщины",
-        font: { size: 22, weight: "bold" as const },
+        font: { size: 32, weight: "bold" as const },
         color: "#222",
-        padding: { top: 10, bottom: 20 },
+        padding: { top: 12, bottom: 24 },
       },
       tooltip: {
         backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -385,21 +385,21 @@ export const Results: React.FC<ResultsProps> = ({
         bodyColor: "#4a5568",
         borderColor: "#e2e8f0",
         borderWidth: 1,
-        padding: 12,
+        padding: 14,
         cornerRadius: 8,
         displayColors: true,
         mode: "index" as const,
         intersect: false,
-        boxWidth: 8,
-        boxHeight: 8,
-        boxPadding: 4,
+        boxWidth: 10,
+        boxHeight: 10,
+        boxPadding: 5,
         usePointStyle: true,
         titleFont: {
-          size: 15,
+          size: 22,
           weight: "bold" as const,
         },
         bodyFont: {
-          size: 14,
+          size: 20,
         },
         callbacks: {
           label: function (context: any) {
@@ -420,26 +420,26 @@ export const Results: React.FC<ResultsProps> = ({
         title: {
           display: true,
           text: "Толщина (мкм)",
-          font: { size: 16 },
+          font: { size: 24 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
         },
         ticks: {
-          font: { size: 14 },
+          font: { size: 20 },
         },
       },
       y: {
         title: {
           display: true,
           text: "КПД (%)",
-          font: { size: 16 },
+          font: { size: 24 },
         },
         grid: {
           color: "rgba(0,0,0,0.07)",
         },
         ticks: {
-          font: { size: 14 },
+          font: { size: 20 },
         },
       },
     },
@@ -457,14 +457,14 @@ export const Results: React.FC<ResultsProps> = ({
         ...jvOptions.plugins?.legend,
         labels: {
           ...jvOptions.plugins?.legend?.labels,
-          font: { ...jvOptions.plugins?.legend?.labels?.font, size: 14 },
-          padding: 10,
+          font: { ...jvOptions.plugins?.legend?.labels?.font, size: 20 },
+          padding: 12,
         },
       },
       title: {
         ...jvOptions.plugins?.title,
-        font: { size: 18, weight: "bold" as const },
-        padding: { top: 6, bottom: 10 },
+        font: { size: 24, weight: "bold" as const },
+        padding: { top: 8, bottom: 12 },
       },
     },
     scales: {
@@ -473,20 +473,20 @@ export const Results: React.FC<ResultsProps> = ({
         ...jvOptions.scales?.x,
         title: {
           ...jvOptions.scales?.x?.title,
-          font: { ...jvOptions.scales?.x?.title?.font, size: 14 },
+          font: { ...jvOptions.scales?.x?.title?.font, size: 20 },
         },
         ticks: {
-          font: { size: 12 },
+          font: { size: 18 },
         },
       },
       y: {
         ...jvOptions.scales?.y,
         title: {
           ...jvOptions.scales?.y?.title,
-          font: { ...jvOptions.scales?.y?.title?.font, size: 14 },
+          font: { ...jvOptions.scales?.y?.title?.font, size: 20 },
         },
         ticks: {
-          font: { size: 12 },
+          font: { size: 18 },
         },
       },
     },
@@ -500,14 +500,14 @@ export const Results: React.FC<ResultsProps> = ({
         ...eqeOptions.plugins?.legend,
         labels: {
           ...eqeOptions.plugins?.legend?.labels,
-          font: { ...eqeOptions.plugins?.legend?.labels?.font, size: 14 },
-          padding: 10,
+          font: { ...eqeOptions.plugins?.legend?.labels?.font, size: 20 },
+          padding: 12,
         },
       },
       title: {
         ...eqeOptions.plugins?.title,
-        font: { size: 18, weight: "bold" as const },
-        padding: { top: 6, bottom: 10 },
+        font: { size: 24, weight: "bold" as const },
+        padding: { top: 8, bottom: 12 },
       },
     },
     scales: {
@@ -516,20 +516,20 @@ export const Results: React.FC<ResultsProps> = ({
         ...eqeOptions.scales?.x,
         title: {
           ...eqeOptions.scales?.x?.title,
-          font: { ...eqeOptions.scales?.x?.title?.font, size: 14 },
+          font: { ...eqeOptions.scales?.x?.title?.font, size: 20 },
         },
         ticks: {
-          font: { size: 12 },
+          font: { size: 18 },
         },
       },
       y: {
         ...eqeOptions.scales?.y,
         title: {
           ...eqeOptions.scales?.y?.title,
-          font: { ...eqeOptions.scales?.y?.title?.font, size: 14 },
+          font: { ...eqeOptions.scales?.y?.title?.font, size: 20 },
         },
         ticks: {
-          font: { size: 12 },
+          font: { size: 18 },
         },
       },
     },
@@ -543,14 +543,14 @@ export const Results: React.FC<ResultsProps> = ({
         ...pceOptions.plugins?.legend,
         labels: {
           ...pceOptions.plugins?.legend?.labels,
-          font: { ...pceOptions.plugins?.legend?.labels?.font, size: 14 },
-          padding: 10,
+          font: { ...pceOptions.plugins?.legend?.labels?.font, size: 20 },
+          padding: 12,
         },
       },
       title: {
         ...pceOptions.plugins?.title,
-        font: { size: 18, weight: "bold" as const },
-        padding: { top: 6, bottom: 10 },
+        font: { size: 24, weight: "bold" as const },
+        padding: { top: 8, bottom: 12 },
       },
     },
     scales: {
@@ -559,20 +559,20 @@ export const Results: React.FC<ResultsProps> = ({
         ...pceOptions.scales?.x,
         title: {
           ...pceOptions.scales?.x?.title,
-          font: { ...pceOptions.scales?.x?.title?.font, size: 14 },
+          font: { ...pceOptions.scales?.x?.title?.font, size: 20 },
         },
         ticks: {
-          font: { size: 12 },
+          font: { size: 18 },
         },
       },
       y: {
         ...pceOptions.scales?.y,
         title: {
           ...pceOptions.scales?.y?.title,
-          font: { ...pceOptions.scales?.y?.title?.font, size: 14 },
+          font: { ...pceOptions.scales?.y?.title?.font, size: 20 },
         },
         ticks: {
-          font: { size: 12 },
+          font: { size: 18 },
         },
       },
     },

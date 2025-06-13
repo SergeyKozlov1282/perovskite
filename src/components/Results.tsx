@@ -12,7 +12,6 @@ import {
   Tooltip,
   Legend,
   Filler,
-  ChartType,
 } from "chart.js";
 import type { ChartOptions } from "chart.js";
 import { Download } from "lucide-react";

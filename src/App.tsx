@@ -1,0 +1,157 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Settings, ChevronDown, ChevronUp } from "lucide-react";
+import Header from "./components/Header";
+import LayerStructure from "./components/LayerStructure";
+import ParameterCards from "./components/ParameterCards";
+import ParametersModal from "./components/ParametersModal";
+import Results from "./components/Results";
+import { solarCellData, ConfigurationKey } from "./data/solarCellData";
+import { Analytics } from "@vercel/analytics/react";
+import { useLanguage } from "./i18n";
+
+function App() {
+  const [perovskite, setPerovskite] = useState("MAPbI3");
+  const [htl, setHtl] = useState("Spiro");
+  const [selectedConfigurations] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const { t } = useLanguage();
+
+  const currentKey = `${perovskite}_${htl}` as ConfigurationKey;
+  const currentData = solarCellData[currentKey];
+
+  const handleMaterialChange = (
+    layerType: "perovskite" | "htl",
+    material: string
+  ) => {
+    if (layerType === "perovskite") {
+      setPerovskite(material);
+    } else {
+      setHtl(material);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col justify-between">
+      <Header />
+
+      <main className="container mx-auto px-6 py-8">
+        <motion.section
+          id="explorer"
+          className="scroll-mt-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h2 className="text-4xl font-bold text-primary-600 mb-6 text-center">
+              {t.explorerTitle}
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-8 rounded-full"></div>
+          </motion.div>
+
+          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20">
+            <motion.p
+              className="mb-8 text-center text-gray-600 text-lg leading-relaxed max-w-4xl mx-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              {t.explorerDescription}
+            </motion.p>
+
+            <LayerStructure
+              perovskite={perovskite}
+              htl={htl}
+              onMaterialChange={handleMaterialChange}
+            />
+
+            <motion.div
+              className="text-center mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.button
+                onClick={() => setIsModalOpen(true)}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 focus:bg-gray-900 active:bg-black focus:outline-none transition-all duration-500 ease-in-out font-medium shadow-lg hover:shadow-2xl hover:shadow-gray-800/50"
+                whileTap={{ scale: 0.95 }}
+              >
+                <Settings className="w-5 h-5" />
+                <span>{t.layerParams}</span>
+              </motion.button>
+            </motion.div>
+
+            <ParameterCards params={currentData.params} />
+
+            <div className="flex justify-center mb-6">
+              <motion.button
+                onClick={() => setShowResults(!showResults)}
+                className="flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 focus:bg-gray-900 active:bg-black focus:outline-none transition-all duration-500 ease-in-out font-medium shadow-lg hover:shadow-2xl hover:shadow-gray-800/50"
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>{showResults ? t.hideCharts : t.showCharts}</span>
+                {showResults ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </motion.button>
+            </div>
+
+            {showResults && (
+              <Results
+                results={{
+                  jv: {
+                    voltage: currentData.jv.v,
+                    current: currentData.jv.j,
+                  },
+                  eqe: {
+                    wavelength: currentData.qe.lambda,
+                    efficiency: currentData.qe.qe,
+                  },
+                  pce: {
+                    thickness: currentData.pce.thickness,
+                    eta: currentData.pce.eta,
+                  },
+                  characteristics: {
+                    voc: currentData.params.voc,
+                    jsc: currentData.params.jsc,
+                    ff: currentData.params.ff,
+                    pce: currentData.params.pce,
+                  },
+                }}
+                selectedConfigurations={selectedConfigurations}
+                currentKey={currentKey}
+              />
+            )}
+          </div>
+        </motion.section>
+      </main>
+
+      <motion.footer
+        className="bg-gray-900/90 text-white text-center p-6 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+      >
+        <p className="text-sm">{t.footer}</p>
+      </motion.footer>
+
+      <ParametersModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        perovskite={perovskite}
+        htl={htl}
+      />
+      <Analytics />
+    </div>
+  );
+}
+
+export default App;

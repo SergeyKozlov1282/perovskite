@@ -157,7 +157,7 @@ export const translations = {
   },
 } as const;
 
-export type Translations = (typeof translations)["ru"];
+export type Translations = (typeof translations)["ru"] | (typeof translations)["en"];
 
 interface LanguageContextType {
   lang: Lang;
